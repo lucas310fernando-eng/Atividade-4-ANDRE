@@ -5,10 +5,10 @@ const alunos = [
 ];
 
 const aprovados = alunos.filter(aluno => aluno.nota >= 7);
-
+const reprovados = alunos.filter(aluno => aluno.nota < 7);
 const nomes = aprovados.map(aluno => aluno.nome);
-
-console.log(nomes);
+const nomesReprovados = reprovados.map(aluno => aluno.nome);
+console.log(`Aprovados: ${nomes}, Reprovados: ${nomesReprovados}`);
 //saída: [ 'Ana', 'Marina' ]
 //O filter() vai filtrar os elementos e criar um novo array contendo os elementos conforme as regras que escolhemos, 
 // nesse caso um objeto chave:valor . Já o método map() vai transformar esse objeto em Strings conforme a regra que decidimos 
