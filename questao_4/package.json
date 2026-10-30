@@ -1,0 +1,16 @@
+{
+  "name": "questao_4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "questão4.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
