@@ -8,3 +8,9 @@ app.get("/alunos/:id", (req, res) => {
 });
 
 app.listen(3000);
+
+app.get("/disciplinas/:codigo", (req, res) => {
+    res.json({
+        codigo: req.params.codigo
+    });
+});
