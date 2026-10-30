@@ -4,6 +4,12 @@ const app = express();
 // Configuração para o Express conseguir ler requisição em JSON
 app.use(express.json());
 
+// Regra 7: Middleware que registra no console o método e a URL
+app.use((req, res, next) => {
+    console.log(`[${req.method}] ${req.url}`);
+    next(); // Muito importante para não travar a requisição aqui!
+});
+
 // Liga o servidor na porta 3000
 app.listen(3000, () => {
     console.log("Servidor de jogos rodando na porta 3000!");
@@ -63,4 +69,43 @@ app.get("/jogos/:id", (req, res) => {
 
     // Se achou o jogo, devolve os dados dele
     res.json(jogoEncontrado);
+});
+
+// Rota 4: PUT /jogos/:id - Atualiza todos os dados de um jogo
+app.put("/jogos/:id", (req, res) => {
+    const idBuscado = Number(req.params.id);
+    const jogoEncontrado = jogos.find(jogo => jogo.id === idBuscado);
+
+    // Regra 5: Retorna 404 se não achar
+    if (!jogoEncontrado) {
+        return res.status(404).json({ erro: "Jogo não encontrado." });
+    }
+
+    const { titulo, plataforma, genero, anoLancamento } = req.body;
+
+    // Atualiza os dados do jogo encontrado
+    jogoEncontrado.titulo = titulo || jogoEncontrado.titulo;
+    jogoEncontrado.plataforma = plataforma || jogoEncontrado.plataforma;
+    jogoEncontrado.genero = genero || jogoEncontrado.genero;
+    jogoEncontrado.anoLancamento = anoLancamento || jogoEncontrado.anoLancamento;
+
+    res.json(jogoEncontrado);
+});
+
+// Rota 5: DELETE /jogos/:id - Remove um jogo do catálogo
+app.delete("/jogos/:id", (req, res) => {
+    const idBuscado = Number(req.params.id);
+    
+    // findIndex procura a posição (índice) do jogo na lista. Se não achar, retorna -1
+    const indexDoJogo = jogos.findIndex(jogo => jogo.id === idBuscado);
+
+    // Regra 5: Retorna 404 se não achar
+    if (indexDoJogo === -1) {
+        return res.status(404).json({ erro: "Jogo não encontrado." });
+    }
+
+    // O método splice remove itens do array. Aqui removemos 1 item a partir daquela posição
+    jogos.splice(indexDoJogo, 1);
+
+    res.json({ mensagem: "Jogo removido com sucesso." });
 });
