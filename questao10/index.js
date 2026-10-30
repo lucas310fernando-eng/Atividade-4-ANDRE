@@ -47,3 +47,20 @@ app.post("/jogos", (req, res) => {
     // Regra 6: Retorna status 201 (Criado com sucesso) e mostra o jogo
     res.status(201).json(novoJogo);
 });
+
+// Rota 3: GET /jogos/:id - Consulta um jogo específico pelo ID
+app.get("/jogos/:id", (req, res) => {
+    // Pega o ID que veio na URL e converte para número
+    const idBuscado = Number(req.params.id);
+
+    // Usa a função .find() para procurar um jogo com esse ID no nosso array
+    const jogoEncontrado = jogos.find(jogo => jogo.id === idBuscado);
+
+    // Regra 5: Se não encontrou nenhum jogo com esse ID, devolve erro 404
+    if (!jogoEncontrado) {
+        return res.status(404).json({ erro: "Jogo não encontrado." });
+    }
+
+    // Se achou o jogo, devolve os dados dele
+    res.json(jogoEncontrado);
+});
