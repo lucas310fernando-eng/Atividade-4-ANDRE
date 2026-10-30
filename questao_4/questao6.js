@@ -8,3 +8,10 @@ app.get("/produtos", (req, res) => {
         categoria: req.query.categoria
     });
 });
+
+app.post("/produtos", (req, res) => {
+    res.json({
+        nome: req.body.nome,
+        preco: req.body.preco
+    });
+});
